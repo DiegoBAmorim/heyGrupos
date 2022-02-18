@@ -30,7 +30,13 @@ const AppRoutes = () => {
           title: route?.params?.thread.name,
         })}
       />
-      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen
+        name="Search"
+        component={Search}
+        options={({route}) => ({
+          title: 'Procurando algum grupo?',
+        })}
+      />
     </Stack.Navigator>
   );
 };
