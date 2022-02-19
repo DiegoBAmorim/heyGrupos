@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
@@ -72,31 +75,37 @@ const ModalNewRoom = ({setVisible, setUpdateScreen}) => {
       });
   };
   return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={setVisible}>
-        <View style={styles.modal}></View>
-      </TouchableWithoutFeedback>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={setVisible}>
+          <View style={styles.modal}></View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>Criar um novo Grupo?</Text>
+            <TextInput
+              style={styles.input}
+              value={roomName}
+              onChangeText={text => setRoomName(text)}
+              placeholder="Nome para sua sala"
+              placeholderTextColor={'#000'}
+            />
 
-      <View style={styles.modalContent}>
-        <Text style={styles.title}>Criar um novo Grupo?</Text>
-        <TextInput
-          style={styles.input}
-          value={roomName}
-          onChangeText={text => setRoomName(text)}
-          placeholder="Nome para sua sala"
-        />
+            <TouchableOpacity
+              style={styles.buttonCreate}
+              onPress={handleButtonCreate}>
+              <Text style={styles.buttonText}>Criar sala</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.buttonCreate}
-          onPress={handleButtonCreate}>
-          <Text style={styles.buttonText}>Criar sala</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={setVisible} style={styles.backButton}>
-          <Text>Voltar</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={setVisible} style={styles.backButton}>
+              <Text>Voltar</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -126,6 +135,7 @@ const styles = StyleSheet.create({
     height: 45,
     backgroundColor: '#DDD',
     marginVertical: 15,
+    paddingLeft: 15,
     fontSize: 16,
     paddingHorizontal: 5,
   },
