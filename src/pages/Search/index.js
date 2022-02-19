@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -6,10 +6,50 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
+import {useIsFocused} from '@react-navigation/native';
+
 const Search = () => {
+  const isFocused = useIsFocused();
   const [input, setInput] = useState('');
+  const [user, setUser] = useState(null);
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    const hasUser = auth().currentUser ? auth().currentUser.toJSON() : null;
+
+    setUser(hasUser);
+  }, [isFocused]);
+
+  const handleSearch = async () => {
+    if (input == '') return;
+    const responseSearch = await firestore()
+      .collection('MESSAGE_THREADS')
+      .where('name', '>=', input)
+      .where('name', '<=', input, +'\uf8ff')
+      .get()
+      .then(querySnapshot => {
+        const threads = querySnapshot.docs.map(documentsSnapshot => {
+          return {
+            _id: documentsSnapshot.id,
+            name: '',
+            lastMessage: {
+              text: '',
+            },
+            ...documentsSnapshot.data(),
+          };
+        });
+        setChats(threads);
+        console.log(threads);
+        setInput('');
+        Keyboard.dismiss();
+      });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.containerInput}>
@@ -19,7 +59,7 @@ const Search = () => {
           onChangeText={text => setInput(text)}
           autoCapitalize={'none'}
         />
-        <TouchableOpacity style={styles.buttonSearch}>
+        <TouchableOpacity style={styles.buttonSearch} onPress={handleSearch}>
           <MaterialIcon name="search" color="#FFF" size={30} />
         </TouchableOpacity>
       </View>
