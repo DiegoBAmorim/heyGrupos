@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2e54d4',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    paddingHorizontal: 10,
   },
   headerRoomLeft: {
     flexDirection: 'row',
