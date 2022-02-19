@@ -50,10 +50,6 @@ const SignIn = () => {
       auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
-          console.log(route.params);
-          if (route.params) {
-            return navigation.navigate('Messages', {thread: route});
-          }
           return navigation.goBack();
         })
         .catch(error => {

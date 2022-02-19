@@ -53,7 +53,7 @@ const Messages = ({route}) => {
   }, []);
 
   const handleSend = async () => {
-    console.log('passsoiu aqui');
+    console.log('passsou aqui');
     if (input === '') return;
 
     await firestore()
