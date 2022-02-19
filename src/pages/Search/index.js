@@ -7,12 +7,14 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
+  FlatList,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 import {useIsFocused} from '@react-navigation/native';
+import ChatList from '../../components/ChatList';
 
 const Search = () => {
   const isFocused = useIsFocused();
@@ -45,11 +47,11 @@ const Search = () => {
           };
         });
         setChats(threads);
-        console.log(threads);
         setInput('');
         Keyboard.dismiss();
       });
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.containerInput}>
@@ -63,6 +65,12 @@ const Search = () => {
           <MaterialIcon name="search" color="#FFF" size={30} />
         </TouchableOpacity>
       </View>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={chats}
+        keyExtractor={item => item._id}
+        renderItem={({item}) => <ChatList data={item} userStatus={user} />}
+      />
     </SafeAreaView>
   );
 };

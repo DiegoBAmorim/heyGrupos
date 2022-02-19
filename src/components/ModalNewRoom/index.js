@@ -35,8 +35,8 @@ const ModalNewRoom = ({setVisible, setUpdateScreen}) => {
             myThreads += 1;
           }
         });
-        if (myThreads => 4) {
-          Alert.alert('Você ja atingiu o limite de grupos por usuairo');
+        if (myThreads >= 6) {
+          Alert.alert('Você ja atingiu o limite de grupos por usuario');
         } else {
           createRoom();
         }
