@@ -6,7 +6,7 @@ App de chat
 </div>
 
 ## <b>Descrição</b>
-Um app de chat em realtime desenvolvido com a tecnologia [ReactNative](https://reactnative.dev/), utilizando o firebase [HGBrasil](https://firebase.google.com/).
+Um app de chat em realtime desenvolvido com a tecnologia [ReactNative](https://reactnative.dev/), utilizando o firebase [firebase](https://firebase.google.com/).
 Para fazer autenticação e banco de dados firestore. Precisa de conexão com a Internet para funcionar.<br><br>
 
 # 🚀 Tecnologias
