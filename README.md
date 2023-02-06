@@ -1,5 +1,7 @@
 # heyGrupos
-App de chat
+<h4>App de chat feito com React Native.</h4>
+
+
 
 <div align="center"> 
    <img width="300" src="src/assets/to_readme/demonstration.GIF"> 
